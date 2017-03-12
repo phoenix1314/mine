@@ -1,15 +1,19 @@
 
+/**
+ * Created by dragon on 2017/3/12.
+ */
 var g_nWidth;   //格子的个数 宽 列
 var g_nHeight;  //格子的个数 高 行
 var g_nMineNum=0;  //雷的个数
 var g_nMineIndex=0; //当前雷的个数
-var g_ary = new Array(g_nHeight);  //二维数组
+var g_ary = new Array();  //二维数组
+var g_arrayIsOpen = new Array(); // 是否翻开过雷 0:未翻开 1：翻开 2：不确定是不是雷
 var g_sMinePath = "../images/mine.gif";
 var g_bMineFlage = 9; //标记为雷
+var g_nResidue = 0;// 标记剩余未翻开的数
+var g_nMineResidue = 0; //标记雷的个数
 
-/**
- * Created by dragon on 2017/3/12.
- */
+
 function $(id) {
     var ret = typeof id === "string"?document.getElementById(id):id;
     return ret;
@@ -32,7 +36,6 @@ function frameModel(id,w,h) {
 
 /**
  * 初始化（游戏板）
- * @param id id
  * @param w 宽度
  * @param h 高度
  */
@@ -52,45 +55,183 @@ function init(id,w,h) {
             frame.appendChild(oDiv);
         }
     }
+
+    divClick(id);
 }
 
 /**
- * 初始化（游戏板）
+ * 小div绑定事件
+ * @param id
+ */
+function divClick(id) {
+    //
+    var oDivs = $(id).getElementsByTagName("div");
+    console.log("oDivs len: "+oDivs.length);
+    for(var i=0;i<oDivs.length;i++)
+    {
+        oDivs[i].onclick = function () {
+            console.log("this.id: "+this.id);  //id是string
+            // console.log(typeof this.id);
+            var samllDivId = parseInt(this.id);
+            var row = parseInt(samllDivId/g_nWidth);
+            var col = parseInt(samllDivId%g_nWidth);
+            console.log("row: "+row+" col:"+col);
+            sweeping(row,col,"false");
+        }
+
+        //右击
+        oDivs[i].oncontextmenu = function () {
+            var samllDivId = parseInt(this.id);
+            var row = parseInt(samllDivId/g_nWidth);
+            var col = parseInt(samllDivId%g_nWidth);
+            console.log("row: "+row+" col:"+col);
+            sweeping(row,col,"true");
+            return false;
+        }
+    }
+
+}
+
+/**
+ *
+ * 翻到0时翻开周围的数字 （递归）
+ * @param row 行号
+ * @param col 列号
+ * @param unsure 标记为不确定
+ */
+function seek_sweep(row, col) {
+    console.log("seek_sweep");
+    // TODO：判断是否翻开过，如果翻开过，如果没翻开过，则标记翻开过，计数-1；
+    if(g_arrayIsOpen[row][col] ===1)
+    {
+        return;
+    }
+    showText(row,col);
+    g_arrayIsOpen[row][col] = 1;
+    g_nResidue--; // 计数-1
+
+    //遍历0 九宫格是否为0或数字
+    for ( var i = row-1; i <= row+1; i++)
+    {
+        for (var j = col-1; j <= col+1; j++)
+        {
+            if ((i>=0 && i<g_nHeight && j>=0 && j<g_nWidth) && g_arrayIsOpen[i][j] != 1)
+            {
+                if (i == row && j == col)
+                    continue;// 当前位置不考虑
+                // g_arrayIsOpen[i][j] = 1;
+                // g_nResidue--;
+                if (g_ary[i][j] == 0)
+                {
+                    showText(i,j);
+                    seek_sweep(i, j);
+                }
+                else if(g_ary[i][j] != g_bMineFlage)
+                {
+                    g_arrayIsOpen[i][j] = 1;
+                    g_nResidue--;
+                    showText(i, j);
+                }
+                else {
+                    continue;
+                }
+            }
+        }
+    }
+
+    // TODO：计数值等于雷数，游戏胜利
+    if (g_nResidue == g_nMineNum) {
+            showText(g_bMineFlage,g_bMineFlage);
+            alert("恭喜你！你赢了！");
+    }
+}
+
+/**
+ * 扫雷
  * @param row 行号
  * @param col 列号
  * @param unsure 标记为不确定
  */
 function sweeping(row, col, unsure) {
-    if (row >= 0 && col >= 0 && row+1 < g_nHeight && col+1 < g_nWidth) {
-        if(unsure === "true") {
-            // 当前位置标记为不确定
-
-            // 先判断当前位置是否标记过，如果是则取消标记，否则添加标记（插根旗帜）
+    console.log("sweeping");
+    if (row >= 0 && col >= 0 && row < g_nHeight && col < g_nWidth && g_arrayIsOpen[row][col] != 1) {
+        if(unsure == "true") {
+            if (g_arrayIsOpen[row][col] === 2) {
+                g_arrayIsOpen[row][col] = 0;
+                if (g_ary[row][col] === g_bMineFlage) {
+                    g_nMineResidue--;
+                }
+            }
+            else {
+                g_arrayIsOpen[row][col] = 2;//
+                g_nMineResidue++;
+                if (g_nMineResidue == g_nMineNum) {
+                    showText(g_bMineFlage,g_bMineFlage);
+                    alert("恭喜你！你赢了！");
+                }
+            }
 
         }
         else {
             if (g_ary[row][col] === g_bMineFlage) {
                 // 游戏结束
+                showText(g_bMineFlage,g_bMineFlage);
+                alert("点错了哟！游戏结束！");
             }
             else if (g_ary[row][col] > 0 && g_ary[row][col] < 9) {
                 // 显示数字
+                g_nResidue --;
+                showText(row,col);
+
+                // TODO：计数值等于雷数，游戏胜利
+                if (g_nResidue == g_nMineNum) {
+                    showText(g_bMineFlage,g_bMineFlage);
+                    alert("恭喜你！你赢了！");
+                }
             }
             else if (g_ary[row][col] == 0) {
-                sweeping();
+                seek_sweep(row, col);
             }
         }
     }
 }
 
+/**
+ * 显示div内容
+ * @param id
+ * @param row
+ * @param col
+ */
+function showText(row, col) {
+    console.log("row: "+row+" col: "+col);
+    if(row === g_bMineFlage && col === g_bMineFlage){
+        //数组初始化为空
+        for(var i =0;i<g_nHeight;i++)
+        {
+            for(var j=0;j<g_nWidth;j++)
+            {
+                var id = (i * g_nWidth + j).toString();
+                console.log("id: "+id);
+                if(g_ary[i][j] === g_bMineFlage)
+                {
+                    $(id).className = "mine";
+                }
+                else {
+                    $(id).innerText = g_ary[i][j];
+                }
+            }
+        }
+    }
+    else {
+        var id = (row * g_nWidth + col).toString();
+        console.log("id: "+id);
+        console.log(g_ary[row][col]);
+        $(id).innerText = g_ary[row][col];
+    }
+}
+
 
 window.onload = function () {
-    // var g_nWidth;   //格子的个数 宽 列
-    // var g_nHeight;  //格子的个数 高 行
-    // var g_nMineNum=0;  //雷的个数
-    // var g_nMineIndex=0; //当前雷的个数
-    // var g_ary = new Array(g_nHeight);  //二维数组
-    // var g_sMinePath = "../images/mine.gif";
-    // var g_bMineFlage = true; //标记为雷
 
     //开始游戏
     $("start").onclick = function () {
@@ -98,18 +239,25 @@ window.onload = function () {
         g_nHeight = $("setHeight").value;  //高度
         g_nMineNum = $("setMine").value; //雷的个数
         console.log("g_nMineNum: "+g_nMineNum);
+
+        //初始化
         g_nMineIndex=0;
+        g_nMineResidue = 0;
 
         $("set").style.display = "none";
         $("frame").style.display = "block";
         init("frame",g_nWidth,g_nHeight);
 
 
-
+        g_nResidue = g_nWidth*g_nHeight;
         //申请二维数组
+        g_arrayIsOpen = new Array(g_nHeight);
+        g_ary = new Array(g_nHeight)
+
         for(var i=0;i<g_nHeight;i++)
         {
             g_ary[i] = new Array(g_nWidth);
+            g_arrayIsOpen[i] = new Array(g_nWidth);
         }
 
         //数组初始化为空
@@ -118,6 +266,7 @@ window.onload = function () {
             for(var j=0;j<g_nWidth;j++)
             {
                 g_ary[i][j]=null;
+                g_arrayIsOpen[i][j]=0;
             }
         }
 
@@ -131,7 +280,7 @@ window.onload = function () {
             var x = Math.floor(Math.random()*g_nWidth);  //取随机数 列
             var y = Math.floor(Math.random()*g_nHeight); //取随机数 行
             console.log("x: "+x+" y: "+y);
-            if(g_ary[y][x] === g_sMinePath)
+            if(g_ary[y][x] === g_bMineFlage)
             {
                 continue;
             }
@@ -139,8 +288,9 @@ window.onload = function () {
             g_nMineIndex++;
             var mineId = y*g_nWidth + x;
             var mineIdStr = mineId.toString();  //数字转为字符
-            console.log(typeof mineIdStr);
-            $(mineIdStr).className = "mine";
+           // console.log(typeof mineIdStr);
+
+           //  $(mineIdStr).className = "mine";
         }
 
         //填充数字 九宫格
@@ -269,14 +419,18 @@ window.onload = function () {
                     }
                     var mineId = i*g_nWidth + j;
                     var mineIdStr = mineId.toString();  //数字转为字符
-                    console.log(g_ary[i][j]);
-                    $(mineIdStr).innerText = g_ary[i][j];
+                   // console.log(g_ary[i][j]);
+                   //  $(mineIdStr).innerText = g_ary[i][j];
                 }
             }
         }
 
-
     }
+
+
+
+
+
 
 
 
