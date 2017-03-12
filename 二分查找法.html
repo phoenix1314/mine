@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>二分法查找</title>
+    <script>
+
+        function binarySearch(array,key) {
+            console.log("len: "+array.length);
+            var high = array.length -1;
+            var low = 0;
+            while (low<=high)
+            {
+                var mid = parseInt((high+low)/2);
+                console.log("arry["+mid+"]="+array[mid]);
+                if(key == parseInt(array[mid]))
+                {
+                    console.log("mid: "+mid);
+                    return mid;
+                }
+                else if(key > parseInt(array[mid]))
+                {
+                    low = mid+1;
+                }
+                else if(key < parseInt(array[mid]))
+                {
+                    high = mid-1;
+                }
+            }
+            return -1; //查找的数字不存在
+        }
+        
+        function order(a,b) {
+            return a-b;
+        }
+
+        var str = prompt("请输入数并用逗号隔开","-34,1,4,55,6,7,22,34,35,36,45,65,87,98,99");
+        var ary = str.split(",");
+        console.log("ary: "+ary);
+
+        var search = prompt("请输入要查找的数","4");
+        console.log("check："+search);
+
+        document.write("输入的数据为: "+ary+"<br/>");
+
+        //排序
+        ary.sort(order);
+        document.write("排序后的数据: "+ary+"<br/>");
+
+        var ret = binarySearch(ary,search);
+        console.log("ret: "+ret);
+        if(ret == -1)
+        {
+            alert("查找的字符，不存在！");
+            document.write("查找的数字不存在");
+        }
+        else{
+            document.write("查找的数字为："+search+"<br/>");
+            document.write("查找的数在数组的下标位置为："+ret+"<br/>");
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

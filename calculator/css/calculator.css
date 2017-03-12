@@ -1,0 +1,360 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-image: url("../images/backg.jpg");
+    /*background-repeat: no-repeat;*/
+}
+
+#container{
+    height: 100%;
+    /*border: 1px solid red;*/
+    padding: 50px auto;
+    margin: 0 auto;
+    /*background-image: url("../images/backg.jpg");*/
+    /*background-repeat: no-repeat;*/
+}
+/*背景图*/
+#container_bk{
+    margin: 40px auto;
+    padding-top: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 350px;
+    height: 500px;
+    background-image: url("../images/bkg.png");
+    /*border: 1px solid deeppink;*/
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+/*文本输入区域*/
+#header{
+    width: 350px;
+    height: 100px;
+    /*border: 1px solid teal;*/
+    position: absolute;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    top: 0;
+}
+
+.header_show{
+    /*border: 1px solid yellow;*/
+    height: 92px;
+    width: 326px;
+    /*margin: 0 auto;*/
+    font-size: 50px;
+    font-weight: bold;
+    text-align: right;
+    background-color: transparent;
+    border: 0px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+/*中间*/
+#middle{
+    width: 350px;
+    height: 410px;
+    /*border: 1px solid blue;*/
+    position: absolute;
+    top: 120px;
+}
+/*删除等操作*/
+.middle_top{
+    height: 20%;
+    /*border: 1px solid gold;*/
+    padding-bottom: 5px;
+}
+
+.middle_top div{
+    width: 37%;
+    height: 100%;
+    /*border: 1px solid salmon;*/
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+}
+
+.middle_top_del{
+    background-image: url("../images/del.jpg");
+}
+
+.middle_top .middle_top_add{
+    width: 18%;
+    /*margin-left: -2px;*/
+    background-image: url("../images/zhengfu.png");
+}
+
+.middle_top .middle_top_AC{
+    width: 38%;
+    background-image: url("../images/ac2.png");
+}
+
+/*hover变化*/
+.middle_top_add:hover{
+    background-image: url("../images/zhengfu2.png");
+}
+
+.middle_top_AC:hover{
+    background-image: url("../images/ac1.png");
+}
+
+/*:active变化*/
+.middle_top .middle_top_add:active{
+    background-image: url("../images/zhengfu1.png");
+}
+
+.middle_top .middle_top_AC:active{
+    background-image: url("../images/ac.png");
+}
+
+/*数字区域*/
+.middle_left{
+    height: 80%;
+    width: 80%;
+    /*border: 1px solid orangered;*/
+    position: relative;
+    float: left;
+}
+
+.middle_left div{
+    width: 22%;
+    height: 23%;
+    /*border: 1px solid darkblue;*/
+    display: inline-block;
+    /*margin-left: -2px;*/
+    /*margin-bottom: -2px;*/
+    background-size: cover;
+    background-position: center;
+}
+
+.middle_left_7{
+    background-image: url("../images/7.png");
+}
+
+.middle_left_8{
+    background-image: url("../images/8.png");
+}
+
+.middle_left_9{
+    background-image: url("../images/9.png");
+}
+
+.middle_left_asterisk{
+    background-image: url("../images/星号.png");
+}
+
+.middle_left_4{
+    background-image: url("../images/4.png");
+}
+
+.middle_left_5{
+    background-image: url("../images/5.png");
+}
+
+.middle_left_6{
+    background-image: url("../images/6.png");
+}
+
+.middle_left_gan{
+    background-image: url("../images/gan.png");
+}
+
+.middle_left_1{
+    background-image: url("../images/1.png");
+}
+
+.middle_left_2{
+    background-image: url("../images/2.png");
+}
+
+.middle_left_3{
+    background-image: url("../images/3.png");
+}
+
+.middle_left_pluses{
+    background-image: url("../images/加.png");
+}
+
+.middle_left .middle_left_0{
+    width: 47%;
+    background-image: url("../images/0.png");
+}
+
+.middle_left_dot{
+    background-image: url("../images/点.png");
+}
+.middle_left_minus{
+    background-image: url("../images/减.png");
+}
+/*hover鼠标移入*/
+.middle_left_7:hover{
+    background-image: url("../images/72.png");
+}
+
+.middle_left_8:hover{
+    background-image: url("../images/82.png");
+}
+.middle_left_9:hover{
+    background-image: url("../images/92.png");
+}
+.middle_left_asterisk:hover{
+    background-image: url("../images/星号2.png");
+}
+.middle_left_4:hover{
+    background-image: url("../images/42.png");
+}
+.middle_left_5:hover{
+    background-image: url("../images/52.png");
+}
+.middle_left_6:hover{
+    background-image: url("../images/62.png");
+}
+.middle_left_gan:hover{
+    background-image: url("../images/gan2.png");
+}
+.middle_left_1:hover{
+    background-image: url("../images/12.png");
+}
+.middle_left_2:hover{
+    background-image: url("../images/22.png");
+}
+.middle_left_3:hover{
+    background-image: url("../images/32.png");
+}
+.middle_left_pluses:hover{
+    background-image: url("../images/加2.png");
+}
+
+.middle_left_0:hover{
+    background-image: url("../images/02.png");
+}
+.middle_left_dot:hover{
+    background-image: url("../images/点2.png");
+}
+.middle_left_minus:hover{
+    background-image: url("../images/减2.png");
+}
+
+/*鼠标点击图片替换*/
+.middle_left .middle_left_7:active{
+    background-image: url("../images/71.png");
+}
+
+.middle_left .middle_left_8:active{
+    background-image: url("../images/81.png");
+}
+
+.middle_left .middle_left_9:active{
+    background-image: url("../images/91.png");
+}
+
+.middle_left .middle_left_asterisk:active{
+    background-image: url("../images/星号1.png");
+}
+
+.middle_left .middle_left_4:active{
+    background-image: url("../images/41.png");
+}
+
+.middle_left .middle_left_5:active{
+    background-image: url("../images/51.png");
+}
+
+.middle_left .middle_left_6:active{
+    background-image: url("../images/61.png");
+}
+
+.middle_left .middle_left_gan:active{
+    background-image: url("../images/gan1.png");
+}
+
+.middle_left .middle_left_1:active{
+    background-image: url("../images/11.png");
+}
+
+.middle_left .middle_left_2:active{
+    background-image: url("../images/21.png");
+}
+
+.middle_left .middle_left_3:active{
+    background-image: url("../images/31.png");
+}
+
+.middle_left .middle_left_pluses:active{
+    background-image: url("../images/加1.png");
+}
+
+.middle_left .middle_left_0:active{
+    background-image: url("../images/01.png");
+}
+
+.middle_left .middle_left_dot:active{
+    background-image: url("../images/点1.png");
+}
+.middle_left .middle_left_minus:active{
+    background-image: url("../images/减1.png");
+}
+
+/*右半部*/
+.middle_right{
+    height: 80%;
+    width: 20%;
+    /*border: 1px solid darkmagenta;*/
+    position: absolute;
+    right: 0px;
+    float: right;
+}
+
+.middle_right div{
+    width: 100%;
+    height: 23%;
+    /*border: 1px solid darkblue;*/
+    display: inline-block;
+    /*margin-left: -2px;*/
+    background-size: cover;
+    background-position: center;
+}
+
+.middle_right_mPlus{
+    background-image: url("../images/mj.png");
+}
+
+.middle_right_mMinus{
+    background-image: url("../images/m-.png");
+}
+
+.middle_right .middle_right_equal{
+    height: 46%;
+    background-image: url("../images/等于2.png");
+}
+
+/*hover变化*/
+.middle_right_mPlus:hover{
+    background-image: url("../images/mj2.png");
+}
+
+.middle_right_mMinus:hover{
+    background-image: url("../images/m-2.png");
+}
+
+.middle_right_equal:hover{
+    background-image: url("../images/等于1.png");
+}
+
+/*:active变化*/
+.middle_right .middle_right_mPlus:active{
+    background-image: url("../images/mj1.png");
+}
+
+.middle_right .middle_right_mMinus:active{
+    background-image: url("../images/m-1.png");
+}
+
+.middle_right .middle_right_equal:active{
+    background-image: url("../images/等于.png");
+}
+
