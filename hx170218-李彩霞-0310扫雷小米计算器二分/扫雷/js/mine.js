@@ -106,7 +106,7 @@ function seek_sweep(row, col) {
     {
         return;
     }
-    showText(row,col);
+    showText(row,col,0);
     g_arrayIsOpen[row][col] = 1;
     g_nResidue--; // 计数-1
 
@@ -123,14 +123,14 @@ function seek_sweep(row, col) {
                 // g_nResidue--;
                 if (g_ary[i][j] == 0)
                 {
-                    showText(i,j);
+                    showText(i,j,0);
                     seek_sweep(i, j);
                 }
                 else if(g_ary[i][j] != g_bMineFlage)
                 {
                     g_arrayIsOpen[i][j] = 1;
                     g_nResidue--;
-                    showText(i, j);
+                    showText(i, j,0);
                 }
                 else {
                     continue;
@@ -141,7 +141,7 @@ function seek_sweep(row, col) {
 
     // TODO：计数值等于雷数，游戏胜利
     if (g_nResidue == g_nMineNum) {
-            showText(g_bMineFlage,g_bMineFlage);
+            showText(g_bMineFlage,g_bMineFlage,0);
             alert("恭喜你！你赢了！");
     }
 }
@@ -156,6 +156,7 @@ function sweeping(row, col, unsure) {
     console.log("sweeping");
     if (row >= 0 && col >= 0 && row < g_nHeight && col < g_nWidth && g_arrayIsOpen[row][col] != 1) {
         if(unsure == "true") {
+
             if (g_arrayIsOpen[row][col] === 2) {
                 g_arrayIsOpen[row][col] = 0;
                 if (g_ary[row][col] === g_bMineFlage) {
@@ -166,8 +167,11 @@ function sweeping(row, col, unsure) {
                 g_arrayIsOpen[row][col] = 2;//
                 g_nMineResidue++;
                 if (g_nMineResidue == g_nMineNum) {
-                    showText(g_bMineFlage,g_bMineFlage);
+                    showText(g_bMineFlage,g_bMineFlage,0);
                     alert("恭喜你！你赢了！");
+                }
+                else {
+                    showText(row,col,1);
                 }
             }
 
@@ -175,17 +179,17 @@ function sweeping(row, col, unsure) {
         else {
             if (g_ary[row][col] === g_bMineFlage) {
                 // 游戏结束
-                showText(g_bMineFlage,g_bMineFlage);
+                showText(g_bMineFlage,g_bMineFlage,0);
                 alert("点错了哟！游戏结束！");
             }
             else if (g_ary[row][col] > 0 && g_ary[row][col] < 9) {
                 // 显示数字
                 g_nResidue --;
-                showText(row,col);
+                showText(row,col,0);
 
                 // TODO：计数值等于雷数，游戏胜利
                 if (g_nResidue == g_nMineNum) {
-                    showText(g_bMineFlage,g_bMineFlage);
+                    showText(g_bMineFlage,g_bMineFlage,0);
                     alert("恭喜你！你赢了！");
                 }
             }
@@ -201,8 +205,9 @@ function sweeping(row, col, unsure) {
  * @param id
  * @param row
  * @param col
+ * @param type 类型 0：数字 1：标记地雷 2：不确定
  */
-function showText(row, col) {
+function showText(row, col,type) {
     console.log("row: "+row+" col: "+col);
     if(row === g_bMineFlage && col === g_bMineFlage){
         //数组初始化为空
@@ -226,7 +231,24 @@ function showText(row, col) {
         var id = (row * g_nWidth + col).toString();
         console.log("id: "+id);
         console.log(g_ary[row][col]);
-        $(id).innerText = g_ary[row][col];
+        switch (type)
+        {
+            case 0:{
+                $(id).innerText = g_ary[row][col];
+                break;
+            }
+            case 1:{
+                $(id).className= "flag";
+                break;
+            }
+            case 2:{
+                $(id).className = "doubt";
+                break;
+            }
+            default: break;
+        }
+
+
     }
 }
 

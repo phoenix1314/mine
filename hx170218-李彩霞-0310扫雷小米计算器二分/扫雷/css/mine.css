@@ -7,6 +7,11 @@ body{
     background-color: #126748;
 }
 
+p{
+    color: #fff;
+    line-height: 30px;
+}
+
 #set{
     background-color: rgba(0,0,0,0.5);
     color: #fff;
@@ -57,6 +62,34 @@ body{
     margin: 1px;
     display: inline-block;
     background-image: url("../images/mine.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.doubt{
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #a0a0a0;
+    width: 32px;
+    height: 32px;
+    background-color: red;
+    margin: 1px;
+    display: inline-block;
+    background-image: url("../images/14.gif");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.flag{
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #a0a0a0;
+    width: 32px;
+    height: 32px;
+    background-color: red;
+    margin: 1px;
+    display: inline-block;
+    background-image: url("../images/55.gif");
     background-repeat: no-repeat;
     background-position: center;
 }
